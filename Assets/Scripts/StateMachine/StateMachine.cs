@@ -17,7 +17,7 @@ public class StateMachine : MonoBehaviour
 
     public void ChangeState(State newState)
     {
-        //Debug.Log("Changing state to " + newState);
+        Debug.Log("Changing state from " + currentState + " to " + newState);
         currentState.Exit();
 
         lastState = currentState;

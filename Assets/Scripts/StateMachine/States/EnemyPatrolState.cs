@@ -24,11 +24,13 @@ public class EnemyPatrolState : State
 
     public override void LogicUpdate()
     {
+        //do patrol logic
         es.Patroling();
+        es.GenerateWalkPoint();
     }
 
     public override void PhysicsUpdate()
     {
-        es.GenerateWalkPoint();
+        
     }
 }
