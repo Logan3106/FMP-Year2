@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class StaminaBar : MonoBehaviour
+
+public class StaminaBar : CharacterStats
 {
     public GameObject player;
     public float stamina;
