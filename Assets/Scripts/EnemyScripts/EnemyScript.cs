@@ -10,6 +10,8 @@ public class EnemyScript : MonoBehaviour
 {
     private Animator anim;
 
+    public AudioSource source;
+
     public NavMeshAgent agent;
 
     public float rangeOfPatrol = 20000;
@@ -21,8 +23,11 @@ public class EnemyScript : MonoBehaviour
     public float attackRange;
     [Range(0, 360)]
     public float angle;
+    public float sight;
 
     public GameObject playerRef;
+    public Transform enemiesEyes;
+    [SerializeField] GameObject ultimateTarget;
 
     public LayerMask targetMask;
     public LayerMask obstructuionMask;
@@ -60,7 +65,21 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        isPlayerInFov = Physics.CheckSphere(transform.position, fov, targetMask);
+        isPlayerInAttackRange = Physics.CheckSphere(transform.position, attackRange, targetMask);
+        SoundEffects();
+
+        //Broken code
+
+        /*
+        FieldOfView(45);
+        FieldOfView(30);
+        FieldOfView(15);
+        FieldOfView(0);
+        FieldOfView(-15);
+        FieldOfView(-30);
+        FieldOfView(-45);
+        */
         //DO NOT PUT ANY STATE LOGIC IN HERE
 
         sm.currentState.HandleInput();
@@ -76,6 +95,22 @@ public class EnemyScript : MonoBehaviour
         sm.currentState.PhysicsUpdate();
     }
 
+
+    public void SoundEffects()
+    {
+        if(isPlayerInFov == true)
+        {
+            if (source.isPlaying) return;
+
+            source.Play();
+            print("Play Music");
+        }
+        else
+        {
+            source.Stop();
+            print("Stop Music");
+        }
+    }
     //patroling state check
     public void Patroling()
     {
@@ -99,6 +134,7 @@ public class EnemyScript : MonoBehaviour
         {
             // change to enemy hunt state
            sm.ChangeState(ehs);
+            //print("Changing1");
         }
     }
 
@@ -107,9 +143,11 @@ public class EnemyScript : MonoBehaviour
         print("hunting");
         agent.SetDestination(playerRef.transform.position);
 
-        if (!(isPlayerInFov && isPlayerInAttackRange))
+        //Change to patrol state
+        if (!isPlayerInFov && !isPlayerInAttackRange)
         {
             sm.ChangeState(eps);
+            //print("Changing2");
         }
     }
     
@@ -123,34 +161,27 @@ public class EnemyScript : MonoBehaviour
         setWalkPoint = true;
     }
 
-    public void FieldOfView()
+    //Borken Code
+
+    /*public void FieldOfView(float angleIn)
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, fov, targetMask);
+        Vector3 start = enemiesEyes.position;
+        Quaternion angle = Quaternion.Euler(0, angleIn, 0);
 
-        if(rangeChecks.Length != 0)
+        Physics.Raycast(start, angle * transform.forward, out RaycastHit hit, sight);
+
+        if (hit.transform == null) return;
+
+        Debug.DrawLine(start, hit.transform.position, Color.red);
+
+        if(hit.collider.tag == "Player")
         {
-
-            Transform target = rangeChecks[0].transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
-
-            if(Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
-            {
-                float distanceToTarget2 = Vector3.Distance(transform.position, target.position);
-                
-                if(!Physics.Raycast(transform.position, directionToTarget, distanceToTarget2))
-                {
-                    isPlayerInFov = true;
-                }
-                else
-                {
-                    isPlayerInFov = false;
-                }
-            }
+            ultimateTarget = hit.transform.gameObject;
+            print("Player Seen");
         }
-        
-    }
+    {
 
-   /* private IEnumerator FOVRutine()
+    private IEnumerator FOVRutine()
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
 

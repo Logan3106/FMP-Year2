@@ -27,7 +27,6 @@ public class EnemyHuntingState : State
     public override void LogicUpdate()
     {
         Debug.Log("Do hunting logic");
-        
         es.Hunting();
         base.LogicUpdate();
     }
