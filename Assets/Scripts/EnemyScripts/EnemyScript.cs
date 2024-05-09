@@ -60,6 +60,7 @@ public class EnemyScript : MonoBehaviour
 
 
         playerRef = GameObject.FindGameObjectWithTag("Player");
+        anim.Play("crawl");
     }
 
     // Update is called once per frame

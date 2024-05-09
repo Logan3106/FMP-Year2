@@ -22,7 +22,7 @@ public class PlayerLook : CharacterStats
         float mouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 40f);
+        xRotation = Mathf.Clamp(xRotation, -90f, 25f);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);

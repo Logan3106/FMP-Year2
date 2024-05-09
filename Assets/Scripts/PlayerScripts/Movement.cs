@@ -6,7 +6,7 @@ public class Movement : CharacterStats
 {
     public CharacterController controller;
 
-    public float speed = 12f;
+    public float speed = 6f;
     public float gravity = -9.81f;
     public float jumpHeight = 2f;
 
@@ -19,7 +19,7 @@ public class Movement : CharacterStats
 
     void Start()
     {
-        
+
     }
 
     

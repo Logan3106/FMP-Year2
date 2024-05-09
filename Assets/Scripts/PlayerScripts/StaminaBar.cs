@@ -9,6 +9,7 @@ public class StaminaBar : CharacterStats
     public float stamina;
     public float maxStamina;
     private Movement playerMovement;
+    public Animator anim;
     
     public Slider staminaBar;
     public float dValue;
@@ -17,20 +18,25 @@ public class StaminaBar : CharacterStats
         maxStamina = stamina;
         staminaBar.maxValue = maxStamina;
         playerMovement = player.GetComponent<Movement>();
+        anim = player.GetComponent<Animator>();
     }
 
     
     void Update()
     {
+        Animations();
+
         if (Input.GetKey(KeyCode.LeftShift) && stamina>=0)
         {
             DecreaseEnergy();
             playerMovement.speed = 12f;
+            
         }
         else if(stamina!=maxStamina)
         {
             playerMovement.speed = 6f;
             IncreaseEnergy();
+
         }
 
         staminaBar.value = stamina;
@@ -59,5 +65,17 @@ public class StaminaBar : CharacterStats
         }
 
         stamina += dValue * Time.deltaTime;
+    }
+
+    public void Animations()
+    {
+        if (playerMovement.speed >= 12)
+        {
+            anim.Play("Running");
+        }
+        else if (playerMovement.speed <= 6)
+        {
+            anim.Play("walking");
+        }
     }
 }
