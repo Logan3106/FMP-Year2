@@ -16,10 +16,11 @@ public class Movement : CharacterStats
 
     Vector3 velocity;
     bool isGrounded;
+    public bool haveKey;
 
     void Start()
     {
-
+        haveKey = false;
     }
 
     
