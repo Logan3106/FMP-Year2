@@ -11,5 +11,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/WiningScene.unity
+    guid: c1bf2b3c4eadfe44b941953bd770574b
+  - enabled: 1
+    path: Assets/Scenes/Ending Scene.unity
+    guid: cf93547a5e405ca4b937775d9e324e27
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
