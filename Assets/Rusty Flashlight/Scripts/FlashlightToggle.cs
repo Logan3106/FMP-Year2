@@ -22,7 +22,7 @@ public class FlashlightToggle : MonoBehaviour
     void Update()
     {
         //toggle flashlight on key down
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             //toggle light
             isOn = !isOn;
