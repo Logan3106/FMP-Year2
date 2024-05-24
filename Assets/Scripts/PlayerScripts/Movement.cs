@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : CharacterStats
 {
@@ -60,5 +61,20 @@ public class Movement : CharacterStats
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Key")
+        {
+            print("Have Key");
+            haveKey = true;
+        }
+
+        if(other.gameObject.tag == "Finish" && haveKey == true)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms;
 
 public class EnemyScript : MonoBehaviour
@@ -38,6 +39,7 @@ public class EnemyScript : MonoBehaviour
     public StateMachine sm;
     public EnemyPatrolState eps;
     public EnemyHuntingState ehs;
+    public EnemyAttackingState eas;
 
     
 
@@ -51,12 +53,15 @@ public class EnemyScript : MonoBehaviour
         sm = gameObject.GetComponent<StateMachine>();
 
         //set up states
-        eps = new EnemyPatrolState(this, sm);
-        sm.Init(eps);
 
         ehs = new EnemyHuntingState(this, sm);
         sm.Init(ehs);
 
+        eas = new EnemyAttackingState(this, sm);
+        sm.Init(eas);
+
+        eps = new EnemyPatrolState(this, sm);
+        sm.Init(eps);
 
 
         playerRef = GameObject.FindGameObjectWithTag("Player");
@@ -150,6 +155,15 @@ public class EnemyScript : MonoBehaviour
             sm.ChangeState(eps);
             //print("Changing2");
         }
+        if(isPlayerInAttackRange && isPlayerInFov)
+        {
+            sm.ChangeState(eas);
+        }
+    }
+
+    public void Attack()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
     
 
